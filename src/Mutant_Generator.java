@@ -73,26 +73,42 @@ public class Mutant_Generator {
         if(digits.size()==1){//자릿수가 1개이면 자릿수끼리 교체될 일이 없다.
            
         }
-        else if(digits.size()==2) {//자릿수가 2인 경우는 시작인덱스와 끝인덱스를 교체한다.
-        	
+        else if(digits.size()==2){//자릿수가 2인 경우는 시작인덱스와 끝인덱스를 교체한다.
+        	if(digits.get(digits.size()-1)!=0) {
         	long typo=0;
         	typo+=digits.get(digits.size()-1);
         	typo*=10;
         	typo+=digits.get(0);
         	
-        	transPosition.add(typo);
+        	transPosition.add(typo);	
+        	}
+        	
         }
         else {//자릿수가 3이상인 경우는 시작 인덱스와 랜덤 인덱스, 끝 인덱스와 랜덤 인덱스를 교체한다. 랜덤 인덱스는 1~끝-1 사이에 존재하는 랜덤한 인덱스이다.
-        	
+
         	int start=0;
         	int end=digits.size()-1;
         	int randomIndex=(int)(Math.random()*(end-1))+1;
+
+
+        	long typo;
+        	if(digits.get(randomIndex)!=0) {//만약 랜덤으로 뽑은 수가 0인 경우, 시작 수랑 자리 교체를 하면 안된다. 예를 들어 100인 경우 010이 된다면, 이는 정수가 아님.
+        		typo=makeTypoOfTransPosition(digits,start, randomIndex);//시작 인덱스 수 <->랜덤 인덱스 수
+
+        		if(typo!=constant) {//만약 오타가 기존 상수랑 같다면, 담지 않는다. 예를 들어 100에서 0과 0을 바꾸어봤자 100이다.
+
+        			transPosition.add(typo);
+        		}
+        	}
+
+
         	
-        	long typo=makeTypoOfTransPosition(digits,digits.get(start),digits.get(randomIndex));//시작 인덱스 수 <->랜덤 인덱스 수
-        	transPosition.add(typo);
         	
-        	typo=makeTypoOfTransPosition(digits,digits.get(randomIndex),digits.get(end));//랜덤 인덱스 수 <-> 끝 인덱스 수
+        	typo=makeTypoOfTransPosition(digits,randomIndex, end);//랜덤 인덱스 수 <-> 끝 인덱스 수
+        	if(typo!=constant) {//만약 오타가 기존 상수랑 같다면, 담지 않는다. 예를 들어 100에서 0과 0을 바꾸어봤자 100이다.
+        		
         	transPosition.add(typo);
+        	}
         	
         	
         }
@@ -100,17 +116,17 @@ public class Mutant_Generator {
         return transPosition;
     }
 
-    private long makeTypoOfTransPosition(List<Long> digits, long a, long b) {//digits[a]<->digits[b] swap 메서드
+    private long makeTypoOfTransPosition(List<Long> digits, int a, int b) {//digits[a]<->digits[b] swap 메서드
 		// TODO Auto-generated method stub
     	long typo=0;
 
     	
     	for(int i=0;i<digits.size();i++) {
-    		if(digits.get(i)==a) {
-    			typo+=b;
+    		if(i==a) {
+    			typo+=digits.get(b);
     		}
-    		else if(digits.get(i)==b) {
-    			typo+=a;
+    		else if(i==b) {
+    			typo+=digits.get(a);
     		}
     		else {
     			typo+=digits.get(i);
