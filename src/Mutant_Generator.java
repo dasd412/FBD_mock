@@ -74,12 +74,21 @@ public class Mutant_Generator {
            
         }
         else if(digits.size()==2) {//자릿수가 2인 경우는 시작인덱스와 끝인덱스를 교체한다.
+        	
         	long typo=0;
         	typo+=digits.get(digits.size()-1);
         	typo*=10;
         	typo+=digits.get(0);
         	
         	transPosition.add(typo);
+        }
+        else {//자릿수가 3이상인 경우는 시작 인덱스와 랜덤 인덱스, 끝 인덱스와 랜덤 인덱스를 교체한다. 랜덤 인덱스는 1~끝-1 사이에 존재하는 랜덤한 인덱스이다.
+        	
+        	int start=0;
+        	int end=digits.size()-1;
+        	int randomIndex=(int)(Math.random()*(end-1))+1;
+        	
+        	
         }
 
         return transPosition;
@@ -116,11 +125,9 @@ public class Mutant_Generator {
         	int randomIndex=(int)(Math.random()*(end-1))+1;//1~end-1 사이의 랜덤한 인덱스 넘버를 선택한다.
         	
         	long typo=makeTypoOfOmission(digits,start);//0번째 숫자 생략한 오타 생성
-        	if(typo!=0) {//3자리 이상 수에서 첫 자리를 생략해서 0이 될 수는 없다. 예를 들어 3000의 경우 첫자리를 생략하면 000이지만, 이는  숫자가 아닌 오타로 인식될 것이다. 
-        		         //이럴 경우는 컴파일러 등에 의해 캐치되는 오타이다.
-        		            
+
         		omissions.add(typo);
-        	}
+        	
         	
         	
         	 typo=makeTypoOfOmission(digits,randomIndex);
