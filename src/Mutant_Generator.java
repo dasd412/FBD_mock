@@ -73,6 +73,14 @@ public class Mutant_Generator {
         if(digits.size()==1){//자릿수가 1개이면 자릿수끼리 교체될 일이 없다.
            
         }
+        else if(digits.size()==2) {//자릿수가 2인 경우는 시작인덱스와 끝인덱스를 교체한다.
+        	long typo=0;
+        	typo+=digits.get(digits.size()-1);
+        	typo*=10;
+        	typo+=digits.get(0);
+        	
+        	transPosition.add(typo);
+        }
 
         return transPosition;
     }
