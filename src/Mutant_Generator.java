@@ -88,13 +88,43 @@ public class Mutant_Generator {
         	int end=digits.size()-1;
         	int randomIndex=(int)(Math.random()*(end-1))+1;
         	
+        	long typo=makeTypoOfTransPosition(digits,digits.get(start),digits.get(randomIndex));//시작 인덱스 수 <->랜덤 인덱스 수
+        	transPosition.add(typo);
+        	
+        	typo=makeTypoOfTransPosition(digits,digits.get(randomIndex),digits.get(end));//랜덤 인덱스 수 <-> 끝 인덱스 수
+        	transPosition.add(typo);
+        	
         	
         }
 
         return transPosition;
     }
 
-    public List<Long> getOmission(long constant) {//자릿수 하나 생략
+    private long makeTypoOfTransPosition(List<Long> digits, long a, long b) {//digits[a]<->digits[b] swap 메서드
+		// TODO Auto-generated method stub
+    	long typo=0;
+
+    	
+    	for(int i=0;i<digits.size();i++) {
+    		if(digits.get(i)==a) {
+    			typo+=b;
+    		}
+    		else if(digits.get(i)==b) {
+    			typo+=a;
+    		}
+    		else {
+    			typo+=digits.get(i);
+    		}
+    		typo*=10;
+    	}
+    	
+    	typo/=10;
+    	
+    	
+		return typo;
+	}
+
+	public List<Long> getOmission(long constant) {//자릿수 하나 생략
 
         List<Long>omissions=new ArrayList<Long>();
 
@@ -102,7 +132,7 @@ public class Mutant_Generator {
         List<Long>digits=separateDigit(constant);
 
         if(digits.size()==1){//자릿수가 1이면 생략할 수가 없음.
-            
+            //do nothing
         }
         else if(digits.size()==2) {//자릿수가 2인 경우, 앞의 숫자 생략한 것과 뒤의 숫자 생력한 것을 담는다.
         	long startOmitted=digits.get(0);

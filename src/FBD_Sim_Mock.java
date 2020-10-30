@@ -15,6 +15,11 @@ public class FBD_Sim_Mock {
 
         long constant=Long.parseLong(br.readLine());//<- 혹시나 9자리 수 이상일 경우 intrusion에서 overflow가 발생하기 때문에 int에서 long으로 바꿈.
         
+        
+        List<Long>transpositions=generator.getTransPosition(constant);
+        for(int i=0;i<transpositions.size();i++) {
+        	System.out.println("transposition: "+transpositions.get(i));
+        }
 
         
         List<Long>omissions=generator.getOmission(constant);
