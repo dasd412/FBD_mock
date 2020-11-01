@@ -23,6 +23,24 @@ public class Mutant_Generator {
 		private int[]SEVEN= {4,5,6,8};
 		private int[]EIGHT= {4,5,6,7,9};
 		private int[]NINE= {5,6,8,0};
+		
+		public int getAdjacentKey(long number) {//파라미터로 받은 정수에 대해 인접한 키를 랜덤하게 리턴하는 메소드. 
+			int picked=0;
+			switch((int)number) {
+			
+			case 0:
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 8:
+			case 9:
+			}
+			return picked;
+		}
 	}
 	
 	private AdjacentKeys adjKey;
@@ -342,17 +360,17 @@ public class Mutant_Generator {
         long typo;
         
         if(digits.size()==1) {//자릿수 1인 경우
-        	typo=makeTypoOfSubstution(digits.get(0));
+        	typo=makeTypoOfSubstution(digits,0);
         	substitutions.add(typo);
         }
         else if(digits.size()<3){//자릿수 2인 경우에는 맨 앞 숫자랑 맨 뒤 숫자에 대해 substitution이 일어난 경우를 담는다.
         	int start=0;
         	int end=1;
         	
-        	typo=makeTypoOfSubstution(digits.get(start));
+        	typo=makeTypoOfSubstution(digits,start);
         	substitutions.add(typo);
         	
-        	typo=makeTypoOfSubstution(digits.get(end));
+        	typo=makeTypoOfSubstution(digits,end);
         	substitutions.add(typo);
         	
         }
@@ -361,13 +379,13 @@ public class Mutant_Generator {
         	int end=digits.size()-1;
         	int randomIndex=(int)(Math.random()*(end-1))+1;
         	
-        	typo=makeTypoOfSubstution(digits.get(start));
+        	typo=makeTypoOfSubstution(digits,start);
         	substitutions.add(typo);
         	
-        	typo=makeTypoOfSubstution(digits.get(end));
+        	typo=makeTypoOfSubstution(digits,end);
         	substitutions.add(typo);
         	
-        	typo=makeTypoOfSubstution(digits.get(randomIndex));
+        	typo=makeTypoOfSubstution(digits,randomIndex);
         	substitutions.add(typo);
         	
         }
@@ -377,8 +395,22 @@ public class Mutant_Generator {
     
     
     
-    private long makeTypoOfSubstution(long digit) {//자릿수 배열에서 뽑은 자릿수에 대해 인접한 수로 대체하기
+    private long makeTypoOfSubstution(List<Long>digits,int index) {//자릿수 배열에서 뽑은 자릿수에 대해 인접한 수로 대체하기
     	long typo=0;
+    	
+    	long adjacent=adjKey.getAdjacentKey(digits.get(index));
+    	
+    	for(int i=0;i<digits.size();i++) {
+    		if(i==index) {//해당 인덱스에서는 인접한 수로 대체
+    			typo+=adjacent;
+    		}
+    		else {
+    			typo+=digits.get(i);
+    		}
+    		typo*=10;
+    	}
+    	
+    	typo/=10;
     	
     	
     	return typo;
