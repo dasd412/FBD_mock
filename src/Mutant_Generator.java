@@ -26,19 +26,91 @@ public class Mutant_Generator {
 		
 		public int getAdjacentKey(long number) {//파라미터로 받은 정수에 대해 인접한 키를 랜덤하게 리턴하는 메소드. 
 			int picked=0;
+		
+			int end;
+			int randomIndex;
+			
 			switch((int)number) {
+			/*
+			 * 각 숫자키의 인접한 수를 담은 배열 길이는 다르므로, 일일이 배열명을 정해주어 구분했습니다.
+			 * end는 각 배열의 끝 인덱스를 나타내며, randomIndex는 0~end 사이의 랜덤한 인덱스입니다.
+			 * picked는 각 배열에서 랜덤하게 뽑힌 인접 숫자키를 나타냅니다.
+			 */
 			
 			case 0:
+				end=ZERO.length-1;
+				randomIndex=(int)(Math.random()*end);
+				picked=ZERO[randomIndex];
+				
+				break;
+			 
 			case 1:
+				end=ONE.length-1;
+				randomIndex=(int)(Math.random()*end);
+				picked=ONE[randomIndex];
+				
+				break;
+				
 			case 2:
+				end=TWO.length-1;
+				randomIndex=(int)(Math.random()*end);
+				picked=TWO[randomIndex];
+				
+				break;
+				
 			case 3:
+				end=THREE.length-1;
+				randomIndex=(int)(Math.random()*end);
+				picked=THREE[randomIndex];
+				
+				break;
+				
 			case 4:
+				end=FOUR.length-1;
+				randomIndex=(int)(Math.random()*end);
+				picked=FOUR[randomIndex];
+				
+				break;
+				
 			case 5:
+				end=FIVE.length-1;
+				randomIndex=(int)(Math.random()*end);
+				picked=FIVE[randomIndex];
+				
+				break;
+				
 			case 6:
+				end=SIX.length-1;
+				randomIndex=(int)(Math.random()*end);
+				picked=SIX[randomIndex];
+				
+				break;
+				
 			case 7:
+				end=SEVEN.length-1;
+				randomIndex=(int)(Math.random()*end);
+				picked=SEVEN[randomIndex];
+				
+				break;
+				
 			case 8:
+				end=EIGHT.length-1;
+				randomIndex=(int)(Math.random()*end);
+				picked=EIGHT[randomIndex];
+				
+				break;
+				
 			case 9:
-			}
+				end=NINE.length-1;
+				randomIndex=(int)(Math.random()*end);
+				picked=NINE[randomIndex];
+				
+				break;
+			}  
+			
+			
+			System.out.println("number: "+number+" picked: "+picked);
+			
 			return picked;
 		}
 	}
