@@ -18,7 +18,7 @@ public class Mutant_Generator {
 		private int[]TWO= {0,1,3,4,5,6};
 		private int[]THREE={0,2,4,5,6};
 		private int[]FOUR= {1,2,3,5,7,8};
-		private int[]FIVE= {1,2,3,4,5,6,7,8,9};
+		private int[]FIVE= {1,2,3,4,6,7,8,9};
 		private int[]SIX= {2,3,5,7,8,9};
 		private int[]SEVEN= {4,5,6,8};
 		private int[]EIGHT= {4,5,6,7,9};
@@ -38,70 +38,70 @@ public class Mutant_Generator {
 			 */
 			
 			case 0:
-				end=ZERO.length-1;
+				end=ZERO.length;
 				randomIndex=(int)(Math.random()*end);
 				picked=ZERO[randomIndex];
 				
 				break;
 			 
 			case 1:
-				end=ONE.length-1;
+				end=ONE.length;
 				randomIndex=(int)(Math.random()*end);
 				picked=ONE[randomIndex];
 				
 				break;
 				
 			case 2:
-				end=TWO.length-1;
+				end=TWO.length;
 				randomIndex=(int)(Math.random()*end);
 				picked=TWO[randomIndex];
 				
 				break;
 				
 			case 3:
-				end=THREE.length-1;
+				end=THREE.length;
 				randomIndex=(int)(Math.random()*end);
 				picked=THREE[randomIndex];
 				
 				break;
 				
 			case 4:
-				end=FOUR.length-1;
+				end=FOUR.length;
 				randomIndex=(int)(Math.random()*end);
 				picked=FOUR[randomIndex];
 				
 				break;
 				
 			case 5:
-				end=FIVE.length-1;
+				end=FIVE.length;
 				randomIndex=(int)(Math.random()*end);
 				picked=FIVE[randomIndex];
 				
 				break;
 				
 			case 6:
-				end=SIX.length-1;
+				end=SIX.length;
 				randomIndex=(int)(Math.random()*end);
 				picked=SIX[randomIndex];
 				
 				break;
 				
 			case 7:
-				end=SEVEN.length-1;
+				end=SEVEN.length;
 				randomIndex=(int)(Math.random()*end);
 				picked=SEVEN[randomIndex];
 				
 				break;
 				
 			case 8:
-				end=EIGHT.length-1;
+				end=EIGHT.length;
 				randomIndex=(int)(Math.random()*end);
 				picked=EIGHT[randomIndex];
 				
 				break;
 				
 			case 9:
-				end=NINE.length-1;
+				end=NINE.length;
 				randomIndex=(int)(Math.random()*end);
 				picked=NINE[randomIndex];
 				
@@ -440,7 +440,10 @@ public class Mutant_Generator {
         	int end=1;
         	
         	typo=makeTypoOfSubstution(digits,start);
-        	substitutions.add(typo);
+        	if(typo!=-1) {
+        		substitutions.add(typo);
+        	}
+        	
         	
         	typo=makeTypoOfSubstution(digits,end);
         	substitutions.add(typo);
@@ -452,7 +455,10 @@ public class Mutant_Generator {
         	int randomIndex=(int)(Math.random()*(end-1))+1;
         	
         	typo=makeTypoOfSubstution(digits,start);
-        	substitutions.add(typo);
+        	if(typo!=-1) {
+        		substitutions.add(typo);
+        	}
+        	
         	
         	typo=makeTypoOfSubstution(digits,end);
         	substitutions.add(typo);
@@ -471,6 +477,10 @@ public class Mutant_Generator {
     	long typo=0;
     	
     	long adjacent=adjKey.getAdjacentKey(digits.get(index));
+    	
+    	if(adjacent==0&&index==0) {//첫 인덱스 숫자가 0으로 대체되는 경우는 예외 처리한다.
+    		return -1;
+    	}
     	
     	for(int i=0;i<digits.size();i++) {
     		if(i==index) {//해당 인덱스에서는 인접한 수로 대체

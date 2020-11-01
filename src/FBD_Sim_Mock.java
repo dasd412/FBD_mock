@@ -13,7 +13,7 @@ public class FBD_Sim_Mock {
         BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(System.out));
 
-        long constant=Long.parseLong(br.readLine());//<- 혹시나 9자리 수 이상일 경우 intrusion에서 overflow가 발생하기 때문에 int에서 long으로 바꿈.
+       // long constant=Long.parseLong(br.readLine());//<- 혹시나 9자리 수 이상일 경우 intrusion에서 overflow가 발생하기 때문에 int에서 long으로 바꿈.
         
         
 //        List<Long>transpositions=generator.getTransPosition(constant);
@@ -39,10 +39,15 @@ public class FBD_Sim_Mock {
 //        	System.out.println("intrusions: "+intrusion.get(i));
 //        }
 
-        List<Long>subs=generator.getSubstitution(constant);
+        for(int j=0;j<10;j++) {
+        	long constant=Long.parseLong(br.readLine());
+        	
+        	List<Long>subs=generator.getSubstitution(constant);
         for(int i=0;i<subs.size();i++) {
         	System.out.println("subs: "+subs.get(i));
         }
+        }
+        
 
 
 
