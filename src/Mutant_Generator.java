@@ -3,6 +3,9 @@ import java.util.*;
 
 public class Mutant_Generator {
 	
+	/*
+	 * 상숫값 대체 뮤턴트 생성
+	 */
 
     public Set<Long> generateMutantCVR(long constant){//파라미터 constant는 xml에서 추출한 상숫값
         //상숫값 대체 오류와 관련된 뮤턴트 생성 코드
@@ -41,6 +44,10 @@ public class Mutant_Generator {
 
         return mutants;
     }
+    
+    /*
+     * 상수를 자릿수로 나누기
+     */
 
     private List<Long>separateDigit(long number){
 
@@ -63,6 +70,9 @@ public class Mutant_Generator {
 
     }
 
+    /*
+     * 자릿수 교체하기
+     */
 
     public List<Long> getTransPosition(long constant) {//자릿수 끼리 교체되는 것. 예를 들어 132 <->123, 100000과 같은 예외 처리 할것.
         List<Long>transPosition=new ArrayList<Long>();
@@ -139,6 +149,10 @@ public class Mutant_Generator {
     	
 		return typo;
 	}
+    
+    /*
+     * 자릿수 하나 생략하기
+     */
 
 	public List<Long> getOmission(long constant) {//자릿수 하나 생략
 
@@ -214,6 +228,10 @@ public class Mutant_Generator {
     	
 		return typo;
 	}
+    
+    /*
+     * 자릿수 하나 중복 입력하기
+     */
 
 	public List<Long> getIntrusion(long constant) {//똑같은 키를 한번 더 누르는 경우
     
@@ -286,6 +304,9 @@ public class Mutant_Generator {
     	return typo;
     }
     
+    /*
+     * 자릿수 하나를 인접한 수 하나로 대체하기 
+     */
     
 
     public List<Long> getSubstitution(long constant) {
@@ -293,8 +314,47 @@ public class Mutant_Generator {
 
 
         List<Long>digits=separateDigit(constant);
+        long typo;
+        
+        if(digits.size()==1) {//자릿수 1인 경우
+        	typo=makeTypoOfSubstution(digits.get(0));
+        	substitutions.add(typo);
+        }
+        else if(digits.size()<3){//자릿수 2인 경우에는 맨 앞 숫자랑 맨 뒤 숫자에 대해 substitution이 일어난 경우를 담는다.
+        	int start=0;
+        	int end=1;
+        	
+        	typo=makeTypoOfSubstution(digits.get(start));
+        	substitutions.add(typo);
+        	
+        	typo=makeTypoOfSubstution(digits.get(end));
+        	substitutions.add(typo);
+        	
+        }
+        else {//자릿수가 3이상인 경우에는 맨 앞 숫자, 맨 뒤 숫자, 그 사이의 랜덤 숫자에 대해 substitution이 일어난 경우를 담는다.(3가지)
+        	int start=0;
+        	int end=digits.size()-1;
+        	int randomIndex=(int)(Math.random()*(end-1))+1;
+        	
+        	typo=makeTypoOfSubstution(digits.get(start));
+        	substitutions.add(typo);
+        	
+        	typo=makeTypoOfSubstution(digits.get(end));
+        	substitutions.add(typo);
+        	
+        	typo=makeTypoOfSubstution(digits.get(randomIndex));
+        	substitutions.add(typo);
+        	
+        }
 
         return substitutions;
+    }
+    
+    private long makeTypoOfSubstution(long digit) {//자릿수 배열에서 뽑은 자릿수에 대해 인접한 수로 대체하기
+    	long typo=0;
+    	
+    	
+    	return typo;
     }
 
 }
