@@ -1,11 +1,36 @@
 
 import java.util.*;
-
-public class Mutant_Generator {
-	
-	/*
+    /*
 	 * 상숫값 대체 뮤턴트 생성
 	 */
+public class Mutant_Generator {
+	
+	private class AdjacentKeys{//각 키에 대해 인접한 숫자 키의 정보를 담고 있는 딕셔너리 클래스
+		/*
+		 * 인접한 키라는 기준은 pc에만 존재하는 숫자 키보드(오른쪽 위치)와
+		 *  pc,노트북 모두 존재하는 숫자 키보드(위쪽 위치) 모두를 조합한 것입니다.
+		 *  
+		 *  논문에 의하면 인접한 키일 때, substitution이 일어날 확률이 약 70%라고 나와있습니다.
+ 		 */
+		
+		private int[]ZERO= {1,2,3,9};
+		private int[]ONE= {0,2,3,4,5};
+		private int[]TWO= {0,1,3,4,5,6};
+		private int[]THREE={0,2,4,5,6};
+		private int[]FOUR= {1,2,3,5,7,8};
+		private int[]FIVE= {1,2,3,4,5,6,7,8,9};
+		private int[]SIX= {2,3,5,7,8,9};
+		private int[]SEVEN= {4,5,6,8};
+		private int[]EIGHT= {4,5,6,7,9};
+		private int[]NINE= {5,6,8,0};
+	}
+	
+	private AdjacentKeys adjKey;
+	
+	public Mutant_Generator() {
+		this.adjKey=new AdjacentKeys();
+	}
+	
 
     public Set<Long> generateMutantCVR(long constant){//파라미터 constant는 xml에서 추출한 상숫값
         //상숫값 대체 오류와 관련된 뮤턴트 생성 코드
@@ -349,6 +374,8 @@ public class Mutant_Generator {
 
         return substitutions;
     }
+    
+    
     
     private long makeTypoOfSubstution(long digit) {//자릿수 배열에서 뽑은 자릿수에 대해 인접한 수로 대체하기
     	long typo=0;
