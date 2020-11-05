@@ -1,4 +1,5 @@
 
+
 import java.util.*;
     /*
 	 * 상숫값 대체 뮤턴트 생성
@@ -108,9 +109,6 @@ public class Mutant_Generator {
 				break;
 			}  
 			
-			
-			System.out.println("number: "+number+" picked: "+picked);
-			
 			return picked;
 		}
 	}
@@ -122,7 +120,7 @@ public class Mutant_Generator {
 	}
 	
 
-    public Set<Long> generateMutantCVR(long constant){//파라미터 constant는 xml에서 추출한 상숫값
+    public long generateMutantCVR(long constant){//파라미터 constant는 xml에서 추출한 상숫값
         //상숫값 대체 오류와 관련된 뮤턴트 생성 코드
 
         //각 상숫값 대체 클래스들을 담을 리스트 생성
@@ -139,25 +137,42 @@ public class Mutant_Generator {
         omission=getOmission(constant);
         transposition=getTransPosition(constant);
 
+        
+        List<Long>mutants=new ArrayList<>();
+        
+        for(int i=0;i<substitution.size();i++) {
+        	if(substitution.get(i)!=constant) {
+        		mutants.add(substitution.get(i));
+        	}
+        }
+        
+        for(int i=0;i<intrusion.size();i++) {
+        	if(intrusion.get(i)!=constant) {
+        		mutants.add(intrusion.get(i));
+        	}
+        }
+        
+        for(int i=0;i<omission.size();i++) {
+        	if(omission.get(i)!=constant) {
+        		mutants.add(omission.get(i));
+        	}
+        }
+        
+        for(int i=0;i<transposition.size();i++) {
+        	if(transposition.get(i)!=constant) {
+        		mutants.add(transposition.get(i));
+        	}
+        }
+     
+        
+        int randomIndex=(int)(Math.random()*(mutants.size()));
+        
+        
+        
 
-        //각각의 유형 오류를 담아 해시 셋에 담는다.
-        Set<Long>mutants=new HashSet<Long>();
-
-        /*
-        HashSet을 선택한 이유:
-        1.중복은 담지 않는다.
-        2.뮤턴트를 담는데 순서(인덱스)는 딱히 필요없다.
-        3.삽입 및 삭제인 경우 O(1)일 정도로 빠름.
-         */
-
-        mutants.addAll(substitution);
-        mutants.addAll(intrusion);
-        mutants.addAll(omission);
-        mutants.addAll(transposition);
 
 
-
-        return mutants;
+        return mutants.get(randomIndex);
     }
     
     /*
@@ -189,7 +204,7 @@ public class Mutant_Generator {
      * 자릿수 교체하기
      */
 
-    public List<Long> getTransPosition(long constant) {//자릿수 끼리 교체되는 것. 예를 들어 132 <->123, 100000과 같은 예외 처리 할것.
+    private List<Long> getTransPosition(long constant) {//자릿수 끼리 교체되는 것. 예를 들어 132 <->123, 100000과 같은 예외 처리 할것.
         List<Long>transPosition=new ArrayList<Long>();
 
 
@@ -269,7 +284,7 @@ public class Mutant_Generator {
      * 자릿수 하나 생략하기
      */
 
-	public List<Long> getOmission(long constant) {//자릿수 하나 생략
+	private List<Long> getOmission(long constant) {//자릿수 하나 생략
 
         List<Long>omissions=new ArrayList<Long>();
 
@@ -348,7 +363,7 @@ public class Mutant_Generator {
      * 자릿수 하나 중복 입력하기
      */
 
-	public List<Long> getIntrusion(long constant) {//똑같은 키를 한번 더 누르는 경우
+	private List<Long> getIntrusion(long constant) {//똑같은 키를 한번 더 누르는 경우
     
         List<Long>intrusions=new ArrayList<Long>();
 
@@ -424,7 +439,7 @@ public class Mutant_Generator {
      */
     
 
-    public List<Long> getSubstitution(long constant) {
+    private List<Long> getSubstitution(long constant) {
         List<Long>substitutions=new ArrayList<Long>();
 
 
